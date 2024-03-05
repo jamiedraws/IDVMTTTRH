@@ -1,0 +1,185 @@
+@use "sass:math";
+
+@use "../themes/colors";
+@use "../themes/fonts";
+@use "../themes/queries";
+
+@use "../../Shared/css/template/shoppingcart/themes/background";
+
+@use "../layouts/article";
+@use "../layouts/document" with (
+    $container: queries.get(xl),
+    $breakpoint: queries.get(desktop)
+);
+
+@use "../../Shared/css/template/shoppingcart/layouts/section" with (
+    $container: queries.get(xl)
+);
+
+@use "../../Shared/css/template/shoppingcart/layouts/view";
+@use "../../Shared/css/template/shoppingcart/layouts/group";
+
+@use "../../Shared/css/template/shoppingcart/media/load-item";
+@use "../../Shared/css/template/shoppingcart/media/contain";
+
+@use "../interfaces/header";
+@use "../interfaces/footer";
+@use "../interfaces/product";
+@use "../../Shared/css/template/shoppingcart/interfaces/dtm";
+
+@use "../../Shared/css/template/shoppingcart/components/icons";
+@use "../../Shared/css/template/shoppingcart/components/button";
+@use "../../Shared/css/template/shoppingcart/components/copy";
+
+@use "../../Shared/css/template/shoppingcart/components/banner";
+@use "../../Shared/css/template/shoppingcart/components/link";
+@use "../../Shared/css/template/shoppingcart/components/skip-link";
+
+@use "../../Shared/css/template/shoppingcart/components/list";
+@use "../../Shared/css/template/shoppingcart/components/title";
+@use "../../Shared/css/template/shoppingcart/components/toast";
+@use "../../Shared/css/template/dtm/components/modal" with (
+    $color: white,
+    $background-color: rgba(0,0,0,0.4)
+);
+
+@use "../../Shared/css/template/dtm/utils/scope";
+@use "../../Shared/css/template/shoppingcart/utils/delay-input";
+@use "../../Shared/css/template/shoppingcart/utils/defer";
+@use "../utils/hide";
+
+// for the critical rendering path
+@mixin critical {
+    @include dtm.new;
+    @include document.new;
+    @include defer.new;
+    @include view.new;
+    @include view.set-anchor-position($static-amount: 10.8rem);
+    @include section.new;
+    @include copy.new;
+
+    @include skip-link.new;
+    @include link.new;
+    @include link.inline;
+    @media all and (max-width: queries.get(mobile)) {
+        @include link.hide;
+    }
+
+    @include background.new;
+
+    @include contain.new;
+    @include load-item.new;
+    @include delay-input.new;
+
+    #{contain.$select} {
+        &--logo {
+            @include contain.ratio(math.div(1366, 297));
+            max-width: 26rem;
+        }
+
+        &--icon {
+            &-search,
+            &-cart {
+                @include contain.ratio(math.div(1, 1));
+                flex: 0 0 2.5em;
+                font-size: 2rem;
+            }
+        }
+
+        &--square {
+            @include contain.ratio(math.div(1, 1));
+        }
+
+        &--video {
+            @include contain.ratio(math.div(640, 360));
+        }
+    }
+
+    @include icons.new;
+
+    @include header.nav;
+    @include header.search;
+
+    @include banner.new {
+        background: colors.get(primary);
+        color: colors.get(carousel-nav-arrow);
+    }
+    @include modal.new {
+        font-size: 2rem;
+    }
+
+    @include scope.for-template {
+        @include button.new(colors.get(dark), colors.get(primary)) {
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: fonts.get(secondary), sans-serif;
+            border-radius: 0px;
+        }
+
+        @include button.name-color-map(
+            "third",
+            colors.get(accent),
+            colors.get(light)
+        );
+    }
+
+    @include hide.new;
+
+    @content;
+}
+
+// defer rendering at the base level
+@mixin defer {
+    @include group.new;
+
+    @include background.new {
+        @include background.contain {
+            background: whitesmoke;
+        }
+    }
+    @include background.image;
+    @include background.name-color-map(
+        "dark",
+        colors.get(dark),
+        colors.get(light)
+    );
+
+    @include title.new {
+        font-weight: bold;
+        font-family: fonts.get(secondary), sans-serif;
+        text-transform: uppercase;
+    }
+    @include article.new;
+
+    @include footer.landing-page;
+    @include list.new;
+    @include list.inline {
+        // js - @Jamie, should this be a part of the shared file?
+        > * {
+            display: inline-block;
+        }
+    }
+
+    @include toast.new;
+    @include toast.polite;
+    @include toast.theme-state;
+
+    #{contain.$select} {
+        &--circle {
+            @include contain.ratio(math.div(1, 1));
+            border-radius: 100%;
+        }
+    }
+
+    // this is just for the HowTo page
+    .video-placeholder {
+        background: black;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2em;
+    }
+
+    @content;
+}

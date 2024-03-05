@@ -1,0 +1,53 @@
+@use "sass:math";
+
+@use "../interfaces/app";
+@use "../interfaces/product";
+@use "../interfaces/form";
+
+@use "../../Shared/css/template/shoppingcart/layouts/form-header-banner";
+@use "../layouts/slide";
+
+@use "../../Shared/css/template/shoppingcart/media/contain";
+
+@mixin index($critical: false) {
+    @if $critical {
+        @include slide.new;
+        #{contain.$select} {
+            &--hero {
+                @include contain.ratio(math.div(2000, 665));
+            }
+        }
+    } @else {
+        @include landing-page {
+            @include form-header-banner.new {
+                input {
+                    margin: 0 0.4em;
+                }
+            }
+        }
+    }
+}
+
+@mixin landing-page($critical: false) {
+    @include app.defer {
+        @include slide.new;
+        @include form.base;
+        @include product.collection;
+        @include product.grid;
+        @content;
+    }
+}
+
+@mixin product-detail-page($critical: false) {
+    @if ($critical) {
+        @include product.single;
+    } @else {
+        @include landing-page;
+    }
+}
+
+@mixin payment-page {
+    @include app.defer {
+        @include form.checkout;
+    }
+}

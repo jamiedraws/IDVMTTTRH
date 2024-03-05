@@ -1,0 +1,142 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<ClientSiteViewData>" %>
+<%@ Import Namespace="Dtm.Framework.ClientSites" %>
+<%@ Import Namespace="Dtm.Framework.Models.Ecommerce" %>
+<%@ Import Namespace="IDVMTTTRH.BlogPosts" %>
+<%@ Import Namespace="IDVMTTTRH.StructuredData" %>
+
+<% 
+    // the instance provided by the controller
+    var blogPostsEngine = ViewData["BlogPostsEngine"] as BlogPostsEngine ?? new BlogPostsEngine();
+
+    // the current blog post entry provided by the controller
+    var blogPost = ViewData["BlogPost"] as BlogPostView ?? new BlogPostView();
+
+    // determines if the current blog post exists
+    var hasBlogPost = blogPostsEngine.BlogPostExists(blogPost);
+
+    // the current category name, provided by the controller
+    var blogCategoryName = ViewData["BlogCategoryName"] as string;
+
+    // the current blog roll tag name, provided by the controller
+    var blogTagName = ViewData["BlogTagName"] as string;
+
+    // the current blog post permalink route, provided by the controller
+    var blogPermalinkRoute = ViewData["BlogPermalinkRoute"] as string;
+
+    // the main blog roll category route, provided by the controller
+    var blogCategoryRoute = ViewData["BlogCategoryRoute"] as string;
+
+    // the main blog roll tag route, provided by the controller
+    var blogTagRoute = ViewData["BlogTagRoute"] as string;
+
+    // the current route, provided by the controller
+    var currentRoute = ViewData["CurrentRoute"] as string ?? string.Empty;
+
+    var hasBlogPermalinkRoute = !string.IsNullOrWhiteSpace(blogPermalinkRoute);
+    var hasBlogCategoryRoute = !string.IsNullOrWhiteSpace(blogCategoryRoute);
+    var hasBlogRoute = !string.IsNullOrWhiteSpace(blogTagRoute);
+%>
+
+<!DOCTYPE html>
+<html lang="en" class="dtm">
+  
+	<head>
+
+        <asp:ContentPlaceHolder ID="PageMetadata" runat="server"></asp:ContentPlaceHolder>
+
+        <%
+            var blogTagBreadcrumbName = string.Format("All {0}", blogTagName);
+
+            var breadcrumbs = new List<IDVMTTTRH.StructuredData.ListItem>();
+
+            if (hasBlogRoute)
+            {
+                breadcrumbs.Add(new IDVMTTTRH.StructuredData.ListItem
+                {
+                    Name = blogTagBreadcrumbName,
+                    Item = DtmContext.Domain.FullDomainCustomPath(blogTagRoute)
+                });
+            }
+
+            if (hasBlogCategoryRoute)
+            {
+                breadcrumbs.Add(new IDVMTTTRH.StructuredData.ListItem
+                {
+                    Name = blogCategoryName,
+                    Item = DtmContext.Domain.FullDomainCustomPath(blogCategoryRoute)
+                });
+            }
+
+            if (hasBlogPermalinkRoute)
+            {
+                breadcrumbs.Add(new IDVMTTTRH.StructuredData.ListItem
+                {
+                    Name = blogPost.Title,
+                    Item = DtmContext.Domain.FullDomainCustomPath(blogPermalinkRoute)
+                });
+            }
+
+            Html.RenderPartial("StructuredDataJSONLD", new ViewDataDictionary
+            {
+                { "Type", "BreadcrumbList" },
+                { "ListItems", breadcrumbs }
+            });
+        %>
+		
+        <%= Html.Partial("GetVersionStyles") %>
+
+		<asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+	</head>
+
+	<body class="dtm__in">
+
+		<%= Html.Partial("Header") %>
+
+        <asp:ContentPlaceHolder ID="PosterImage" runat="server"></asp:ContentPlaceHolder>
+
+        <% if (hasBlogRoute && hasBlogCategoryRoute) { %>
+        <!-- // Breadcrumbs -->
+        <nav aria-label="Article category" class="view section section--breadcrumb">
+            <div class="view__in section__in">
+                <div class="breadcrumb">
+                    <% var mainAnchor = "#main"; %>
+                    <% if (hasBlogRoute) { %>
+                        <% var route = blogTagRoute == currentRoute ? mainAnchor : blogTagRoute; %>
+                        <a href="<%= route %>?cver=<%= DtmContext.VersionId %>">All <%= blogTagName %></a>
+                    <% } %>
+                
+                    <% if (hasBlogCategoryRoute) { %>
+                        <% var route = blogCategoryRoute == currentRoute ? mainAnchor : blogCategoryRoute; %>
+                        <a href="<%= route %>?cver=<%= DtmContext.VersionId %>"><%= blogCategoryName %></a>
+                    <% } %>
+
+                    <% if (hasBlogPermalinkRoute) { %>
+                        <a href="<%= mainAnchor %>"><%= blogPost.Title %></a>
+                    <% } %>
+                </div>
+            </div>
+        </nav>        
+        <% } %>
+
+		<asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+            
+        <div class="view section">
+            <div class="view__in section__in">
+                <%= Html.Partial("PaginateList") %>
+            </div>
+        </div>
+
+        <%= Html.Partial("Instagram-Slider") %>
+
+        <%= Html.Partial("EmailOptIn") %>
+
+        <%= Html.Partial("Footer") %>
+
+        <%= Html.Partial("GetVersionScripts") %>
+		
+		<%= Model.FrameworkVersion %>
+
+	</body>
+
+</html>

@@ -1,0 +1,4 @@
+@use "../interfaces/page";
+
+@include page.payment-page;
+@include page.landing-page($critical: false);

@@ -1,0 +1,290 @@
+/* Cascading Stylesheet | Campaign Version
+
+	@Layout
+
+ * --------------------------------------------------------------------- */
+	/* Canvas | @Layout */
+	/* set the minimum width of our canvas */
+	.dtm__in--dv .l-outer,
+	.dtm__in--dv .l-header,
+	.dtm__in--dv .l-footer {
+		min-width: 900px;
+	}
+
+	/* set the maximum width of our canvas */
+	.dtm__in--dv .l-header__in,
+	.dtm__in--dv .l-outer__in,
+	.dtm__in--dv .l-footer__in {
+		max-width: 900px;
+	}
+
+	/* set the minimum height of our footer */
+	.dtm__in--dv .l-footer {
+		min-height: 80px;
+	}
+
+	/* set the padding of the canvas */
+	.dtm__in--dv .l-outer__in {
+		padding: 0.25em;
+	}
+
+	/* set the border style of our header & midline sections */
+	.dtm__in--dv .l-header,
+	.dtm__in--dv .o-box--banner {
+		border-style: solid;
+	}
+
+	/* set the border width of our header section */
+	.dtm__in--dv .l-header {
+		border-width: 0 0 3px;
+	}
+
+	/* set the border width of our midline section */
+	.dtm__in--dv .o-box--banner {
+		border-width: 3px 0;
+	}
+
+
+	/* Page | @Layout */
+	/* set the size of our desktop video */
+	.dtm__in--dv .video {
+		width: 307px;
+		margin: 0 auto 1rem;
+	}
+
+	/* set the size of our desktop features & benefits area */
+	.dtm__in--dv .fb {
+		width: 275px;
+	}
+
+
+/* --------------------------------------------------------------------- *
+
+	@Theme
+
+ * --------------------------------------------------------------------- */
+	/*	Font Size
+		@Desc: Set up our font sizes
+	* --------------------------------------------------------------------- */
+	h1, .h1 {
+		font-size: 75px;
+	}
+
+	h2, .h2 {
+		font-size: 50px;
+	}
+
+	h3, .h3 {
+		font-size: 35px;
+	}
+
+	h4, .h4 {
+		font-size: 30px;
+	}
+
+	h5, .h5 {
+		font-size: 25px;
+	}
+
+	h6, .h6  {
+		font-size: 20px;
+	}
+
+	body, .p  {
+		font-size: 16px;
+	}
+
+
+	/*	@Font Family
+		@Desc: Set up our font families
+	* --------------------------------------------------------------------- */
+	body {
+		font-family: Helvetica, sans-serif;
+	}
+
+	.sans-primary-book {
+		font-family: 'Gotham Book', sans-serif;
+	}
+
+	.sans-primary-medium {
+		font-family: 'Gotham Medium', sans-serif;
+	}
+
+	.sans-primary-bold {
+		font-family: 'Gotham Bold', sans-serif;
+	}
+
+	.sans-primary-ultra {
+		font-family: 'Gotham Ultra', sans-serif;
+	}
+
+
+ 	/*	@Color
+		@Desc: Set up our font color palette
+	 * --------------------------------------------------------------------- */
+	.color-primary {
+		color: #650DA2;
+	}
+
+	.color-secondary {
+		color: #650DA2;
+	}
+
+	.color-tertiary {
+		color: #650DA2;
+	}
+
+
+	/*	@Background
+		@Desc: Set up our background color palette
+	 * --------------------------------------------------------------------- */
+	.bg-primary {
+		background: #650DA2;
+	}
+
+	.bg-secondary {
+		background: #650DA2;
+	}
+
+	.bg-tertiary {
+		background: #650DA2;
+	}
+
+	/* set the desktop color of our white-space background */
+	.dtm__in--dv {
+		background: black;
+	}
+
+	/* set the color of our canvas background */
+	.l-outer__in {
+		background: white;
+	}
+
+	/* set the desktop color of our header, midline & footer */
+	.dtm__in--dv .l-header,
+	.dtm__in--dv .l-footer,
+	.dtm__in--dv .o-box--banner {
+		background: #fafafa;
+		color: #8A8C8E;
+	}
+
+	/* set the desktop color of the header & midline border color */
+	.dtm__in--dv .l-header,
+	.dtm__in--dv .o-box--banner {
+		border-color: #8A8C8E;
+	}
+
+	/* set the color of our form headline (defaults to #333) */
+	.c-brand--form .c-brand--form__legend {
+		background: #111111;
+	}
+
+	/* set the color of our order review table (defaults to red) */
+	.c-brand--table th,
+	.c-brand--table__th {
+		background: #EDC936;
+	}
+
+	/* set the color of our mobile order now button
+	.dtm .order-button,
+	.dtm .nav-button {
+		background: #f58223;
+	} */
+
+
+	/*	@Graphics
+	 * --------------------------------------------------------------------- */
+	/* set our desktop background image */
+	.dtm__in--dv {
+
+	}
+
+	/* set up our path to the sprite sheet */
+	[class*="sprite"] {
+		background: url(/images/desktop/_sprites.png?appV=[#DtmContext.ApplicationVersion#]) no-repeat;
+	}
+
+	/* Order Btn (Round) */
+	.sprite--btn-ord-round {
+		width: 97px; height: 101px; background-position: -5px -2px;
+	}
+
+	.sprite--btn-ord-round:hover {
+		background-position: -106px -2px;
+	}
+
+	/* Order Btn (Rect) */
+	.sprite--btn-ord-rect {
+		width: 194px; height: 57px; background-position: -6px -109px;
+	}
+
+	.sprite--btn-ord-rect:hover {
+		background-position: -6px -170px;
+	}
+
+		/* position our order button in the main offer area */
+		.gfx-offer .sprite--btn-ord-rect {
+			position: absolute; top: 150px; right: 15px;
+		}
+
+	/* Process Order  */
+	.sprite--btn-order-send {
+		width: 194px; height: 57px; background-position: -6px -228px;
+	}
+
+	.sprite--btn-order-send:hover {
+		background-position: -6px -290px;
+	}
+
+
+	/*	@Features & Benefits
+		@Desc: thematize the features & benefits
+	 * --------------------------------------------------------------------- */
+	/* set the text color and size of the headline */
+	.fb__headline {
+		color: white;
+		font: 20px/1 'Gotham Ultra', sans-serif;
+		text-transform: uppercase;
+	}
+
+	/* set the color of our banner and folds */
+	.fb__banner {
+		background: #7fc027;
+		border-color: #568616;
+	}
+
+	/* set the color & size of our list */
+	.fb__list {
+		background: white;
+		border-color: white;
+		font-size: 16px;
+		list-style: none;
+	}
+
+		/* set the size of the features box */
+		.fb__list {
+			width: 105%;
+			left: -7px;
+		}
+
+	/* set the color of our bullets */
+	.fb__list li:before {
+		background: #e81e00;
+	}
+
+	/*	@Mobile Properties
+	* --------------------------------------------------------------------- */
+	/* NEW BUTTON STYLE */
+	.dtm__in--mv .nav-button {
+		background: rgb(143, 143, 143);
+		background: -moz-linear-gradient(top, rgb(143, 143, 143), rgb(99, 99, 99));
+		background: -webkit-linear-gradient(top, rgb(143, 143, 143), rgb(99, 99, 99));
+		background: linear-gradient(to bottom, rgb(143, 143, 143), rgb(99, 99, 99));
+	}
+
+	.dtm__in--mv .dtm .order-button {
+	    background: rgb(83, 83, 83);
+	    background: -moz-linear-gradient(top, rgb(83, 83, 83), rgb(15, 15, 15));
+	    background: -webkit-linear-gradient(top, rgb(83, 83, 83), rgb(15, 15, 15));
+	    background: linear-gradient(to bottom, rgb(83, 83, 83), rgb(15, 15, 15));
+	}

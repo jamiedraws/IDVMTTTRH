@@ -1,0 +1,155 @@
+@use "sass:math";
+
+// config
+@use "../config/colors";
+@use "../config/fonts";
+@use "../config/queries";
+
+// layouts
+@use "../layouts/document";
+@use "../layouts/content";
+@use "../layouts/slide";
+@use "../layouts/form-header-banner";
+@use "../../../Shared/css/template/shoppingcart/media/load-item";
+@use "../../../Shared/css/template/shoppingcart/media/contain";
+@use "./../layouts/modal-dialog";
+
+// interfaces
+@use "../interfaces/header";
+@use "../interfaces/footer";
+@use "../interfaces/product";
+@use "../interfaces/form";
+@use "../../../Shared/css/template/shoppingcart/interfaces/dtm";
+
+// components
+@use "../components/button";
+@use "../components/title";
+@use "../../../Shared/css/template/shoppingcart/components/icons";
+@use "../../../Shared/css/template/shoppingcart/components/copy";
+
+@use "../../../Shared/css/template/shoppingcart/components/banner";
+@use "../../../Shared/css/template/shoppingcart/components/link";
+@use "../../../Shared/css/template/shoppingcart/components/skip-link";
+
+@use "../../../Shared/css/template/shoppingcart/components/list";
+@use "../../../Shared/css/template/shoppingcart/components/toast";
+@use "../../../Shared/css/template/dtm/components/modal" with (
+    $color: white,
+    $background-color: rgba(0, 0, 0, 0.4)
+);
+
+// abstracts
+@use "../abstracts/instagram";
+
+// utils
+@use "../../../Shared/css/template/dtm/utils/scope";
+@use "../../../Shared/css/template/shoppingcart/utils/delay-input";
+@use "../../../Shared/css/template/shoppingcart/utils/defer";
+@use "../utils/hide";
+
+// for the critical rendering path
+@mixin critical {
+    @include fonts.request;
+    @include dtm.new;
+    @include document.base;
+    @include defer.new;
+    @include copy.new;
+
+    @include content.base;
+    @include content.title-desc;
+
+    @include skip-link.new;
+    @include link.new;
+    @include link.inline;
+    @media all and (max-width: queries.get(mobile)) {
+        @include link.hide;
+    }
+
+    @include contain.new;
+
+    @include load-item.new;
+    @include delay-input.new;
+
+    #{contain.$select} {
+        &--logo {
+            @include contain.ratio(math.div(1366, 297));
+            max-width: 26rem;
+        }
+
+        &--icon {
+            &-search,
+            &-cart {
+                @include contain.ratio(math.div(1, 1));
+                flex: 0 0 2.5em;
+                font-size: 2rem;
+            }
+        }
+
+        &--square {
+            @include contain.ratio(math.div(1, 1));
+        }
+
+        &--video {
+            @include contain.ratio(math.div(16, 9));
+            background: #222;
+        }
+    }
+
+    @include icons.new;
+
+    @include header.base;
+    @include header.nav;
+    @include header.search;
+
+    @include modal.new {
+        font-size: 2rem;
+    }
+
+    @include button.base;
+
+    @include scope.for-template {
+        @include hide.new;
+    }
+
+    @include title.base;
+
+    @include slide.new;
+
+    @include footer.landing-page;
+
+    @include list.new;
+    @include list.inline;
+
+    @include toast.new;
+    @include toast.polite;
+    @include toast.theme-state;
+
+    @include modal-dialog.base;
+
+    @content;
+}
+
+// defer rendering at the base level
+@mixin defer {
+    #{contain.$select} {
+        &--circle {
+            @include contain.ratio(math.div(1, 1));
+            border-radius: 100%;
+        }
+    }
+
+    // this is just for the HowTo page
+    .video-placeholder {
+        background: black;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2em;
+    }
+
+    @include slide.instagram;
+    @include form-header-banner.base;
+
+    @content;
+}

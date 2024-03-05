@@ -1,0 +1,58 @@
+$select: ".paginate-list" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "./../abstracts/shape-icons";
+
+@mixin base {
+    #{$select} {
+        &__group {
+            @include group.contain;
+            justify-content: center;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            overflow: auto;
+        }
+
+        &__prev::before,
+        &__next::after {
+            content: "";
+
+            @include shape-icons.chevron;
+
+            margin-bottom: -0.1em;
+        }
+
+        &__prev {
+            &::before {
+                margin-left: 1.5em;
+                margin-right: 0.25em;
+            }
+        }
+
+        &__next {
+            &::after {
+                margin-left: 0.25em;
+                transform: rotate(0.5turn);
+            }
+        }
+
+        &__current-page {
+            font-weight: bold;
+            color: colors.get(attention);
+        }
+
+        &__pages {
+            > a {
+                padding: 0.25em;
+            }
+        }
+
+        @content;
+    }
+}

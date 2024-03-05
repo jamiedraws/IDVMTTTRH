@@ -1,0 +1,128 @@
+@use "sass:map";
+@use "sass:color";
+@use "sass:math";
+
+$sizes: (
+    desktop: 120rem,
+    base-font: 0.628
+);
+
+// config
+@use "../config/fonts";
+@use "../config/colors";
+@use "../config/queries";
+
+// utils
+@use "../../../Shared/css/template/base/utils/unit-conversion" as convert with (
+    $base: map.get($sizes, base-font)
+);
+
+@use "../../../Shared/css/template/dtm/utils/scope";
+
+// layouts
+@use "../../../Shared/css/template/base/layouts/document";
+@use "../../../Shared/css/template/base/layouts/view" with (
+    $breakpoint: queries.get(navbar)
+);
+@use "../../../Shared/css/template/base/layouts/section" with (
+    $frame: 1rem,
+    $container: map.get($sizes, desktop)
+);
+
+// components
+@use "../../../Shared/css/template/base/components/list";
+
+// themes
+@use "../../../Shared/css/template/base/themes/background";
+
+@mixin base {
+    @include document.base;
+
+    @include view.new;
+    @include view.set-anchor-position(
+        $static-amount: #{convert.to-rem(77)},
+        $dynamic-amount: #{convert.to-rem(65)}
+    );
+
+    @include section.new {
+        &--nav &__in {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        &--main &__in {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        &--breadcrumb &__in {
+            max-width: queries.em(1000);
+        }
+    }
+
+    @include scope.get-root {
+        font-size: #{map.get($sizes, base-font)}rem;
+
+        @media all and (max-width: queries.get(mobile)) {
+            font-size: clamp(
+                #{math.div(map.get($sizes, base-font), 2)}rem,
+                2.5vw,
+                #{map.get($sizes, base-font)}rem
+            );
+        }
+    }
+
+    @include scope.for-template {
+        font: 500 #{convert.to-rem(16)} fonts.get(tertiary), sans-serif;
+        line-height: 1.45;
+    }
+
+    h2 {
+        font-size: convert.to-rem(60);
+    }
+
+    ul:not([class*="c-list"]) {
+        @include list.structure($offset: 1em);
+        @include list.bullet($size: 1em) {
+            color: colors.get(callout);
+        }
+    }
+
+    input {
+        line-height: inherit;
+    }
+
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    @include background.new {
+        &__picture {
+            background: colors.get(placeholder);
+        }
+    }
+
+    @include background.image;
+
+    @include background.name-color-map(
+        "primary",
+        colors.get(primary),
+        colors.get(light)
+    );
+
+    @include background.name-color-map(
+        "primary-dark",
+        colors.get(primary-dark),
+        colors.get(light)
+    );
+
+    @include background.name-color-map(
+        "accent",
+        colors.get(accent),
+        colors.get(primary)
+    );
+
+    @content;
+}

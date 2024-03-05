@@ -1,0 +1,129 @@
+@use "sass:map";
+
+// config
+@use "../config/fonts";
+@use "../config/colors";
+
+// interfaces
+@use "../../../Shared/css/template/shoppingcart/interfaces/dtm";
+
+// layouts
+@use "../layouts/nav";
+@use "../../../Shared/css/template/shoppingcart/layouts/form";
+@use "../../../Shared/css/template/shoppingcart/layouts/group";
+
+// components
+@use "../../../Shared/css/template/shoppingcart/components/logo";
+@use "../../../Shared/css/template/shoppingcart/components/toggle-icons";
+@use "../../../Shared/css/template/shoppingcart/components/circular";
+@use "../../../Shared/css/template/shoppingcart/components/banner";
+
+// themes
+@use "../../../Shared/css/template/base/themes/background";
+
+// utils
+@use "../../../Shared/css/template/base/utils/unit-conversion" as convert;
+
+@mixin base {
+    @keyframes display-promo-header-text {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .header {
+        &__promo {
+            flex: 1;
+            background: colors.get(primary);
+            color: colors.get(dark);
+            z-index: 4;
+            position: relative;
+            font-family: fonts.get(tertiary);
+            font-weight: 500;
+            font-size: 1.33em;
+            margin: 0;
+            padding: 0.75em 0.25em;
+            line-height: 1.2;
+            display: block;
+            text-align: center;
+            b {
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+
+            span {
+                --pitch-speed: 0.85s;
+                display: inline-block;
+                opacity: 0;
+                transform: scale(2);
+                animation: display-promo-header-text 0.5s
+                    cubic-bezier(0.06, 1.07, 0.47, 1) forwards;
+
+                &:nth-child(2) {
+                    animation-delay: var(--pitch-speed);
+                }
+
+                &:nth-child(3) {
+                    animation-delay: calc(var(--pitch-speed) * 2);
+                }
+            }
+        }
+        &__button {
+            background: colors.get(dark);
+            color: colors.get(primary);
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75em;
+            padding: 0.4em;
+            margin: 0 0.5em;
+            &:hover,
+            &:focus {
+                background: colors.get(carousel-nav-arrow);
+            }
+        }
+    }
+}
+
+@mixin nav {
+    #{dtm.$select-dtm} {
+        #{nav.$select} {
+            @include dtm.unset-icomoon;
+        }
+    }
+
+    @include logo.new;
+
+    @include nav.base;
+
+    @include toggle-icons.new;
+    @include toggle-icons.checkbox(
+        "#{nav.$select}__toggle",
+        scale(0),
+        scale(0.75)
+    );
+
+    // @include circular.new {
+    //     color: colors.get(light);
+    //     padding: 1em;
+
+    //     &:hover,
+    //     &:focus {
+    //         color: colors.get(dark);
+    //     }
+    // }
+    // @include circular.pill;
+
+    @content;
+}
+
+@mixin search {
+    @include form.search;
+    @include form.underline;
+    @include form.field-icon;
+
+    @include nav.search;
+
+    @content;
+}

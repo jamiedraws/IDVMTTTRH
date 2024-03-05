@@ -1,0 +1,49 @@
+$select: ".logo-nav" !default;
+
+// abstracts
+@use "../../../Shared/css/template/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        &__group {
+            @include group.contain;
+            align-items: center;
+        }
+
+        &__link {
+            flex: 0 1 auto;
+
+            @include logo-for("walmart") {
+                flex-basis: 10em;
+            }
+
+            @include logo-for("target") {
+                flex-basis: 3em;
+            }
+
+            @include logo-for("walgreens") {
+                flex-basis: 10em;
+            }
+
+            @include logo-for("cvs") {
+                flex-basis: 10em;
+            }
+
+            @include logo-for("riteaid") {
+                flex-basis: 10em;
+            }
+
+            @include logo-for("bedbathandbeyond") {
+                flex-basis: 10em;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin logo-for($name: "") {
+    &[data-name*="#{$name}"] {
+        @content;
+    }
+}

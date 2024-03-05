@@ -1,0 +1,19 @@
+// config
+@use "../config/fonts";
+
+// layouts
+@use "../layouts/footer";
+
+// components
+@use "../components/social";
+
+@mixin base {
+    @include footer.new;
+    @content;
+}
+
+@mixin landing-page {
+    @include base {
+        @include social.base;
+    }
+}

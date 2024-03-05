@@ -1,0 +1,56 @@
+$select: ".button" !default;
+
+// config
+@use "../config/fonts";
+@use "../config/colors";
+
+// components
+@use "../../../Shared/css/template/shoppingcart/components/button";
+
+// utils
+@use "../../../Shared/css/template/dtm/utils/scope";
+
+@mixin base {
+    @include scope.for-template {
+        @include button.new(colors.get(primary), colors.get(dark)) {
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: fonts.get(primary), sans-serif;
+            border-radius: 0;
+
+            &--can-scale {
+                font-size: 1em;
+            }
+
+            &--product {
+                padding: 0.5em;
+            }
+        }
+
+        @include button.name-color-map(
+            "third",
+            colors.get(lm-button),
+            colors.get(lm-button-text)
+        );
+
+        @include button.name-color-map(
+            "fourth",
+            colors.get(dark),
+            colors.get(primary)
+        );
+
+        @include button.name-color-map(
+            "fourth-invert",
+            colors.get(primary),
+            colors.get(dark)
+        );
+    }
+
+    #{$select} {
+        @content;
+    }
+}
+
+@mixin express-checkout {
+    @include button.express-checkout;
+}

@@ -1,0 +1,73 @@
+@use "sass:math";
+
+// interfaces
+@use "../interfaces/app";
+@use "../interfaces/product";
+@use "../interfaces/form";
+
+// layouts
+@use "../layouts/slide";
+@use "../layouts/content";
+@use "../layouts/hero";
+@use "../layouts/review";
+@use "../layouts/animation-carousel";
+
+// components
+@use "../components/logo-nav";
+@use "./../components/video-title";
+
+// media
+@use "../../../Shared/css/template/shoppingcart/media/contain";
+
+@mixin index($critical: false) {
+    @if $critical {
+        @include landing-page($critical: true) {
+            @include hero.base;
+        }
+    } @else {
+        @include landing-page {
+            @include animation-carousel.base;
+            @include slide.vimeo-carousel;
+        }
+    }
+}
+
+@mixin landing-page($critical: false) {
+    @if $critical {
+        @include content.title-video;
+        @include video-title.base;
+        @include logo-nav.base;
+
+        @include form.base;
+
+        @include product.grid;
+        @include product.collection;
+
+        @content;
+    } @else {
+        @include app.defer {
+            @include slide.responsive;
+            @include slide.review;
+
+            @include review.base;
+
+            @content;
+        }
+    }
+}
+
+@mixin product-detail-page($critical: false) {
+    @if ($critical) {
+        @include landing-page($critical: true) {
+            @include product.single;
+        }
+    } @else {
+        @include landing-page;
+    }
+}
+
+@mixin payment-page {
+    @include app.defer {
+        @include form.checkout;
+    }
+}

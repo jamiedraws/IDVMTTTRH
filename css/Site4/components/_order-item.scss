@@ -1,0 +1,30 @@
+$select: ".order-item" !default;
+
+// abstracts
+@use "../../../Shared/css/template/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        flex: 1;
+        margin-right: 1em;
+
+        &__group {
+            @include group.contain;
+            justify-content: space-between;
+        }
+
+        &__item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        &__id {
+            font-weight: normal;
+            font-size: 80%;
+            color: #666666;
+        }
+
+        @content;
+    }
+}

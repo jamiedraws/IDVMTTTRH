@@ -1,0 +1,30 @@
+$select: ".video-title" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        &__group {
+            @include group.contain($gutter: 1rem) {
+            }
+            justify-content: center;
+        }
+
+        &__title {
+            flex-basis: 100%;
+            font-size: 2.25em;
+        }
+
+        &__video {
+            flex-basis: 30em;
+        }
+
+        @content;
+    }
+}

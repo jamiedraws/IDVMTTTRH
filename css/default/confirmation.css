@@ -1,0 +1,303 @@
+/**
+* @prettier
+*/
+.dtm__in .group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow: hidden;
+  margin: -0.5rem;
+}
+.dtm__in .group > * {
+  flex: 0 1 auto;
+}
+.dtm__in .group > * {
+  margin: 0.5rem;
+}
+.dtm__in .bg picture,
+.dtm__in .bg [data-src-img],
+.dtm__in .bg [data-src-iframe] {
+  background: whitesmoke;
+}
+.dtm__in .bg--image {
+  position: relative;
+}
+.dtm__in .bg--image .bg__image {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 0;
+}
+.dtm__in .bg--image .bg__image img {
+  width: 100%;
+  height: auto;
+}
+@supports (object-fit: cover) {
+  .dtm__in .bg--image .bg__image img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.dtm__in .bg--dark {
+  background: black;
+  color: white;
+}
+.dtm__in .bg--dark::selection,
+.dtm__in .bg--dark ::selection {
+  background: white;
+  color: black;
+}
+.dtm__in .bg--dark a:focus,
+.dtm__in .bg--dark button:focus,
+.dtm__in .bg--dark [tabindex="0"]:focus {
+  outline-color: white;
+}
+.dtm__in .title {
+  margin: 2rem 0;
+  font-weight: bold;
+  font-family: bebas-neue-pro-expanded, sans-serif;
+  text-transform: uppercase;
+}
+.dtm__in .title__picture {
+  margin: auto;
+}
+.dtm__in .title__text > small {
+  display: block;
+}
+.dtm__in .title__text sup {
+  font-size: 0.6em;
+}
+.dtm__in .title__small {
+  font-size: 80%;
+}
+.dtm__in .title__light {
+  font-weight: 400;
+  text-transform: none;
+}
+.dtm__in .title__center {
+  text-align: center;
+}
+.dtm__in .article {
+  font-size: 2rem;
+}
+.dtm__in .article__title {
+  font-size: 4rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.dtm__in .article h1,
+.dtm__in .article h2 {
+  font-size: 3rem;
+}
+.dtm__in .article__copy > * + * {
+  margin-top: 2rem;
+}
+.dtm__in .article ol,
+.dtm__in .article ul {
+  margin-left: 2.5rem;
+}
+.dtm__in .article ol > * + *,
+.dtm__in .article ul > * + * {
+  margin-top: 1rem;
+}
+.dtm__in .article .dtm__in .article__card-list {
+  margin: 0;
+}
+.dtm__in .footer {
+  text-align: center;
+  font: 1.4rem/1.45 europa, sans-serif;
+}
+.dtm__in .footer__disclaimer {
+  margin: 2em auto;
+  border: 1px solid currentColor;
+  padding: 2em;
+  text-align: left;
+}
+.dtm__in .footer__disclaimer p {
+  margin: 0;
+}
+.dtm__in .footer__disclaimer p:not(:first-of-type) {
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+.dtm__in .footer__disclaimer form {
+  display: none;
+}
+.dtm__in .footer__disclaimer .button {
+  margin-top: 1em;
+}
+.dtm__in .footer nav {
+  max-width: 70em;
+  margin: auto;
+}
+.dtm__in .footer__logo {
+  margin: 3rem auto;
+}
+.dtm__in .social {
+  font-size: 1.5em;
+  margin: -1.5rem;
+  display: flex;
+  justify-content: center;
+}
+.dtm__in .social > * {
+  margin: 1.5rem;
+}
+.dtm__in .social__icon {
+  stroke: none;
+  fill: currentColor;
+}
+.dtm__in .list {
+  list-style: none;
+}
+.dtm__in .list > * {
+  display: list-item;
+  break-inside: avoid;
+}
+.dtm__in .list > *:not(:last-child) {
+  margin-bottom: 1rem;
+}
+.dtm__in .list--inline > *:not(:last-child)::after {
+  content: "|";
+  margin: 0 1rem;
+}
+.dtm__in .list--inline > * {
+  display: inline-block;
+}
+.dtm__in .toast__close {
+  flex: 0 0 auto;
+  width: 3em;
+  height: 3em;
+  display: block;
+  border: none;
+  background: none;
+  position: relative;
+}
+.dtm__in .toast__close::before, .dtm__in .toast__close::after {
+  content: "";
+  width: 0.2em;
+  height: inherit;
+  background: currentColor;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  transition: transform 300ms ease-out 0.35s;
+}
+.dtm__in .toast__close::before {
+  transform-origin: top right;
+  transform: rotateZ(-45deg) scaleY(1.35);
+  right: auto;
+}
+.dtm__in .toast__close::after {
+  transform-origin: top left;
+  transform: rotateZ(45deg) scaleY(1.35);
+  transition-delay: 0.7s;
+  left: auto;
+}
+.dtm__in .toast--hidden .dtm__in .toast__close::before {
+  transform: rotateZ(-45deg) scaleY(0);
+}
+.dtm__in .toast--hidden .dtm__in .toast__close::after {
+  transform: rotateZ(45deg) scaleY(0);
+}
+.dtm__in .toast {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0;
+}
+.dtm__in .toast__stage {
+  text-align: left;
+  background: white;
+  color: black;
+  padding: 2rem;
+  transform: translateY(0);
+  pointer-events: all;
+}
+@media all and (min-width: 600px) {
+  .dtm__in .toast__stage {
+    margin: 1rem;
+  }
+}
+.dtm__in .toast--is-ready .dtm__in .toast__stage {
+  transition: transform 0.5s cubic-bezier(0.04, 0.64, 0.2, 1), opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+.dtm__in .toast--hidden .toast__close::before {
+  transition-delay: 0.35s;
+}
+.dtm__in .toast--hidden .toast__close::after {
+  transition-delay: 0.7s;
+}
+.dtm__in .toast--hidden .toast__stage {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+.dtm__in .toast--alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  transition-delay: 1s;
+  pointer-events: none;
+}
+.dtm__in .toast--alert .toast__stage {
+  box-shadow: 0 0 1.25em rgba(0, 0, 0, 0.35);
+}
+.dtm__in .toast__text {
+  flex: 0 1 auto;
+  text-align: center;
+}
+.dtm__in .toast__group {
+  margin: -1rem;
+  overflow: hidden;
+}
+.dtm__in .toast__group > * {
+  margin: 1rem;
+}
+.dtm__in .toast__close {
+  font-size: 0.35em;
+  position: relative;
+  z-index: 2;
+}
+.dtm__in .toast__close::before {
+  transition-delay: 0.35s;
+}
+.dtm__in .toast__close::after {
+  transition-delay: 0.7s;
+}
+.dtm__in .toast--polite {
+  align-items: flex-end;
+  bottom: 2rem;
+}
+.dtm__in .toast[data-state=valid] > .dtm__in .toast__stage {
+  background: #ebf9eb;
+  color: #025002;
+}
+.dtm__in .toast[data-state=invalid] > .dtm__in .toast__stage {
+  background: #ffebeb;
+  color: #860000;
+}
+.dtm__in .contain--circle {
+  border-radius: 100%;
+}
+.dtm__in .contain--circle::before {
+  padding-bottom: calc(100% / (1));
+}
+.dtm__in .video-placeholder {
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+}
+
+/*# sourceMappingURL=confirmation.css.map */

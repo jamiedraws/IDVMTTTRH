@@ -1,0 +1,127 @@
+// config
+@use "../config/colors";
+
+// interfaces
+@use "../../../Shared/css/template/shoppingcart/interfaces/dtm";
+
+// layouts
+@use "../layouts/form";
+@use "../layouts/account";
+@use "../layouts/checkout";
+@use "../layouts/product";
+
+//components
+@use "../../../Shared/css/template/shoppingcart/components/icons";
+@use "../../../Shared/css/template/shoppingcart/components/validate";
+@use "../../../Shared/css/template/shoppingcart/components/validation-summary-errors" as vse;
+@use "../../../Shared/css/template/dtm/components/payment-icons";
+
+@use "../components/order-table";
+@use "../components/order-item";
+@use "../components/button";
+
+@mixin base {
+    @include form.new;
+    @include form.field;
+    @include form.field-label;
+
+    @content;
+}
+
+@mixin product {
+    @include base {
+        @include form.icon-field-combobox;
+        @include form.label-combobox;
+        @include form.select;
+    }
+}
+
+@mixin account {
+    @include checkout {
+        @include order-table.order-item;
+        @include order-item.base;
+    }
+}
+
+@mixin checkout {
+    @include base {
+        @include account.new;
+        @include account.checkout;
+
+        @include checkout.new;
+        @include checkout.cart;
+        @include checkout.order-item;
+        @include checkout.offer-details;
+
+        @include dtm.express-checkout {
+            #{account.$select} {
+                &__header + #{dtm.$select-checkout} {
+                    margin-top: 1rem;
+                }
+            }
+        }
+        @include dtm.form;
+        @include dtm.review-table;
+        @include dtm.facebox;
+        @include dtm.remove-form-headline;
+        @include dtm.remove-fieldset-border;
+
+        @include product.new;
+        @include product.single;
+        @include product.cart;
+
+        @include button.express-checkout;
+
+        @include order-table.new;
+        @include order-table.item-grid {
+            tbody {
+                td {
+                    &:first-child {
+                        @include order-table.span-item-grid-row;
+                    }
+
+                    &:not(:first-child) {
+                        @include order-table.flex-item-grid-row;
+                    }
+                }
+            }
+        }
+
+        @include form.group;
+        @include form.label;
+        @include form.fieldset;
+
+        @include form.icon-field-combobox;
+        @include form.label-combobox;
+        @include form.checkbox;
+        @include form.select;
+
+        @include icons.combobox;
+
+        @include validate.new {
+            &__group {
+                order: 1;
+            }
+        }
+
+        @include payment-icons.new;
+        @include payment-icons.form;
+        .payment--form {
+            font-size: 1.5rem;
+            .link {
+                margin-left: 0.5em !important;
+            }
+        }
+        .form.form--klaviyo-optin {
+            justify-content: flex-start;
+            font-style: normal;
+            padding-left: 0;
+            align-items: center;
+            .form__label {
+                font-style: normal;
+            }
+        }
+
+        @content;
+    }
+}

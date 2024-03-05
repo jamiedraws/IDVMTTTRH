@@ -1,0 +1,67 @@
+@use "sass:math";
+
+// interfaces
+@use "../../../Shared/css/template/shoppingcart/interfaces/dtm";
+
+// config
+@use "../config/queries";
+
+// layouts
+@use "../layouts/story-card";
+@use "../layouts/product";
+@use "../layouts/product-carousel";
+@use "../../../Shared/css/template/shoppingcart/layouts/form";
+@use "../layouts/full-width-picture" as fwp with (
+    $breakpoint: queries.get(hero)
+);
+@use "./../layouts/offer-text-selection";
+
+// media
+@use "../../../Shared/css/template/shoppingcart/media/contain";
+
+// components
+@use "../../../Shared/css/template/shoppingcart/components/button";
+
+@mixin collection {
+    @include story-card.image-caption;
+    @include fwp.new;
+    @include fwp.flip;
+    @include fwp.homepage;
+}
+
+@mixin grid {
+    @include story-card.new;
+    @include story-card.max-two;
+    @include story-card.max-three;
+    @include story-card.image-link;
+    @include story-card.image-button;
+
+    @include item;
+
+    @include product.grid;
+    @include product.no-form;
+}
+
+@mixin single {
+    @include product.single;
+    @include product.for-rovorheads;
+    @include product-carousel.new;
+
+    @include offer-text-selection.base;
+}
+
+@mixin item {
+    @include product.new;
+
+    @include form.icon-field-combobox;
+    @include form.label-combobox;
+    @include form.select;
+
+    #{dtm.$select-dtm} {
+        #{product.$select} {
+            @include dtm.unset-icomoon;
+        }
+    }
+
+    @include story-card.buttons;
+}

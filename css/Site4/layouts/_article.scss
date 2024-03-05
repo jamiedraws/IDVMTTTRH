@@ -1,0 +1,232 @@
+$select: ".article" !default;
+
+// config
+@use "./../config/fonts";
+@use "./../config/colors";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/chart";
+
+// components
+@use "./../components/quote";
+
+@mixin base {
+    #{$select} {
+        @include chart.structure;
+
+        @media all and (max-width: queries.set(600)) {
+            @include chart.block-layout;
+        }
+
+        table {
+            margin-top: 1rem;
+        }
+
+        &__in {
+            max-width: queries.em(1000);
+        }
+
+        &__header {
+            text-align: center;
+        }
+
+        &__title {
+            font-size: fonts.em(52);
+            text-transform: initial;
+        }
+
+        &__date-address {
+            font-size: fonts.em(25);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        &__date-address + &__title {
+            margin-top: 2rem;
+        }
+
+        &__category {
+            font-size: fonts.rem(20);
+            text-transform: capitalize;
+        }
+
+        &__picture {
+            margin: 5rem 0;
+
+            > img {
+                object-fit: cover;
+            }
+        }
+
+        h2 {
+            font-size: fonts.rem(30);
+        }
+
+        &__copy {
+            @include space.between-flow-elements(2rem) {
+            }
+            @include quote.summary;
+
+            line-height: 1.75;
+
+            img {
+                margin: auto;
+            }
+        }
+
+        ol,
+        ul {
+            @include space.between-flow-elements() {
+            }
+            margin-left: 2.5rem;
+        }
+
+        & &__card-list {
+            margin: 0;
+        }
+
+        a {
+            color: colors.get(callout);
+        }
+
+        img[class="right"],
+        img[data-align="right"] {
+            float: right;
+            margin-left: 1rem;
+
+            @media screen and (max-width: 750px) {
+                float: none;
+                margin: auto;
+            }
+        }
+
+        figure {
+            display: inline-block;
+            img {
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+        figcaption {
+            display: inline-block;
+            margin: 0.75em auto;
+            font-style: italic;
+            font-size: 12px;
+            font-size: clamp(12px, 0.75em, 16px);
+            text-align: center;
+            width: 100%;
+            //max-width: 20em;
+        }
+
+        textarea {
+            max-width: 100%;
+        }
+
+        @content;
+    }
+
+    @include pictures;
+}
+
+@mixin pictures {
+    #{$select} {
+        article {
+            img[src*="person-using-microtouch-solo-titanium-trim"] {
+                margin: auto;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin nav {
+    #{$select} {
+        &--nav {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+
+            #{$select} {
+                &__next {
+                    position: relative;
+                    z-index: 2;
+                    margin-left: auto;
+
+                    svg {
+                        transform: rotate(180deg);
+                        position: relative;
+                        top: 0.15rem;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin contain {
+    #{$select} {
+        &--contain {
+            max-width: 102rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+
+@mixin image-video {
+    #{$select} {
+        &--image-video {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-around;
+
+            @include group.gutter(1rem);
+
+            #{$select} {
+                &__video {
+                    flex: 0 1 560px;
+                }
+
+                &__image {
+                    flex: 0 1 560px;
+
+                    picture {
+                        margin: auto;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin image-text {
+    #{$select} {
+        &--image-text {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-around;
+
+            @include group.gutter(2rem);
+
+            #{$select} {
+                &__picture {
+                    flex: 0 1 360px;
+                }
+
+                &__copy {
+                    flex: 1 1 400px;
+                }
+            }
+        }
+    }
+}

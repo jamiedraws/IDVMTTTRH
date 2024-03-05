@@ -1,0 +1,106 @@
+$select: ".footer" !default;
+
+@use "../themes/fonts";
+
+@mixin new {
+    #{$select} {
+        text-align: center;
+        font: 1.4rem/1.45 fonts.get(primary), sans-serif;
+
+        &__disclaimer {
+            margin: 2em auto;
+            border: 1px solid currentColor;
+            padding: 2em;
+            text-align: left;
+
+            p {
+                margin: 0;
+            }
+
+            p:not(:first-of-type) {
+                margin-top: 1em;
+                margin-bottom: 0;
+            }
+
+            form {
+                display: none;
+            }
+
+            .button {
+                margin-top: 1em;
+            }
+        }
+
+        nav {
+            max-width: 70em;
+            margin: auto;
+        }
+
+        &__logo {
+            margin: 3rem auto;
+        }
+
+        @content;
+    }
+}
+
+@mixin separate-list-with-text {
+    #{$select} {
+        .c-list {
+            & + p {
+                border-top: 1px solid;
+                padding-top: 2rem;
+                margin-top: 2rem;
+            }
+
+            &--nav {
+                display: block;
+            }
+        }
+    }
+}
+
+@mixin convert-to-block-list {
+    #{$select} {
+        .c-list {
+            &--nav {
+                background: white;
+                color: black;
+                border-radius: 0.25em;
+                overflow: hidden;
+                padding: 0;
+                text-align: left;
+            }
+
+            &__item {
+                display: flex;
+                padding: 0;
+                border-bottom: 1px solid;
+                border-right: none;
+                border-color: #ccc;
+            }
+
+            &__link {
+                flex: 1;
+                padding: 1em;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                transition: background 0.3s ease-in-out;
+                text-decoration: none;
+
+                &::after {
+                    content: "\e919";
+                    font-family: "Icomoon";
+                    display: block;
+                }
+
+                &:hover,
+                &:focus {
+                    background: #ededed;
+                }
+            }
+        }
+    }
+}

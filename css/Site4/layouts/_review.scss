@@ -1,0 +1,83 @@
+@use "sass:math";
+
+$select: ".review" !default;
+
+// config
+@use "../config/colors";
+@use "../config/fonts";
+
+// media
+@use "../../../shared/css/template/base/media/contain";
+
+// themes
+@use "../../../shared/css/template/base/themes/background";
+
+// abstracts
+@use "../../../shared/css/template/base/abstracts/copy";
+@use "../../../Shared/css/template/base/abstracts/group";
+
+// utils
+@use "../../../Shared/css/template/base/utils/unit-conversion" as convert;
+
+@mixin base {
+    #{contain.$select} {
+        &--stars {
+            @include contain.ratio(math.div(728, 150));
+        }
+    }
+
+    #{$select} {
+        text-align: center;
+        @include background.color-map(colors.get(review-bg), colors.get(light));
+        font-size: 1rem;
+
+        &__figure {
+            @include copy.separate;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+
+            font: #{convert.to-rem(23)}/ 1.35 fonts.get(tertiary), sans-serif;
+
+            max-width: convert.to-rem(300);
+            width: 100%;
+        }
+
+        &__stars {
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+
+            @include group.contain(0.5rem);
+
+            &--title {
+                font-size: 4.25rem;
+            }
+
+            &--customer {
+                font-size: 3rem;
+                margin-top: 0.5rem;
+            }
+        }
+
+        &__title {
+            font: bold convert.to-em(10) fonts.get(primary), sans-serif;
+            font-stretch: condensed;
+        }
+
+        &__body {
+            margin: auto;
+            padding: 1.5rem 0;
+            @include copy.separate;
+            width: 100%;
+        }
+
+        figcaption {
+            font-style: italic;
+        }
+
+        @content;
+    }
+}

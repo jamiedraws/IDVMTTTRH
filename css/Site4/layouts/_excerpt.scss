@@ -1,0 +1,92 @@
+$select: ".excerpt" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/group";
+@use "./../abstracts/shape-icons";
+
+@mixin base {
+    #{$select} {
+        @content;
+    }
+}
+
+@mixin span-picture-with-copy-tile {
+    #{$select} {
+        &:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        &__main-title {
+            font-size: 2.5em;
+            text-align: center;
+            line-height: 1;
+            margin-bottom: 1em;
+        }
+
+        &--span-picture-with-copy-tile {
+            display: flex;
+            justify-content: space-around;
+            text-decoration: none;
+            flex-wrap: wrap;
+
+            > * {
+                flex-grow: 1;
+                flex-basis: 50%;
+                margin: 0;
+
+                @media screen and (max-width: 750px) {
+                    flex-basis: 100%;
+                }
+            }
+
+            #{$select} {
+                &__copy {
+                    align-self: center;
+                    @include space.between-flow-elements(0.5em) {
+                    }
+                    padding-top: 1em;
+                    padding-bottom: 1em;
+                }
+
+                picture + &__copy {
+                    padding-left: 3em;
+                    padding-right: 3em;
+                }
+
+                &__title {
+                    font-size: 1.5em;
+                }
+
+                &__desc {
+                    font-family: fonts.get(base);
+                    color: colors.get(base); // added color for pillar page
+                }
+
+                &__link {
+                    display: flex;
+                    align-items: center;
+
+                    color: colors.get(base);
+
+                    &::after {
+                        content: "";
+
+                        @include shape-icons.chevron($color: colors.get(base));
+
+                        transform: rotate(0.5turn);
+
+                        margin-left: 0.25em;
+                        margin-top: 0.1em;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}

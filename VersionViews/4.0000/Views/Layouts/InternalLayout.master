@@ -1,0 +1,134 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<ClientSiteViewData>" %>
+<%@ Import Namespace="Dtm.Framework.ClientSites" %>
+<%@ Import Namespace="IDVMTTTRH.Models" %>
+
+<% 
+    var isIndex = DtmContext.PageCode == "Index";
+    var isFrontPage = DtmContext.Page.IsStartPageType;
+    var isSubPage = isFrontPage && !isIndex;
+
+    var productCategory = new ProductCategory();
+    ViewData["ProductCategory"] = productCategory;
+    var isPDP = DtmContext.PageCode == productCategory.PageCode;
+    var isPageWithProducts = isIndex || isPDP;
+    var isMobile = DtmContext.IsMobile;
+    var isDesktop = !isMobile;
+
+    var dtm = isMobile ? "@mv" : "@dv";
+    var dtmIn = isMobile ? "dtm__in--mv" : "dtm__in--dv";
+    var ext = DtmContext.ApplicationExtension;
+
+    var getTwitterImage = SettingsManager.ContextSettings["SocialPlugins.Twitter.OpenGraphImage"];
+    var getFacebookImage = SettingsManager.ContextSettings["SocialPlugins.Facebook.OpenGraphImage"];
+    var productName = SettingsManager.ContextSettings["Label.ProductName"];
+
+    var title = Model.PageTitle;
+    var url = DtmContext.Domain.FullDomainOfferVersionUrl(DtmContext.PageCode);
+    var metaDescription = Model.PageMetaDescription ?? string.Empty;
+    var metaKeywords = Model.PageMetaKeywords ?? string.Empty;
+
+    if (isPDP)
+    {
+        var productCode = Request[productCategory.QueryName] as string ?? string.Empty;
+        if (!String.IsNullOrEmpty(productCode))
+        {
+            var productItem = new ProductItem(productCode, productCategory);
+            var product = productItem.GetProduct();
+
+            if (product != null)
+            {
+                var productImages = new ProductImages(productCode);
+                var image = productImages.GetFirstImagePath();
+
+                title = product.Title ?? product.ProductName ?? title;
+                url = productItem.GetAbsoluteProductPageUrl();
+                metaDescription = product.MetaDescription ?? metaDescription;
+                metaKeywords = product.MetaKeywords ?? metaKeywords;
+
+                getFacebookImage = productImages.SetFirstImageOrDefault(getFacebookImage);
+                getTwitterImage = productImages.SetFirstImageOrDefault(getTwitterImage);
+            }
+        }
+    }
+%>
+
+<!DOCTYPE html>
+<html id="dtm" lang="en" class="dtm">
+  
+	<head>
+
+		<title><%= title %></title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="description" content="<%= metaDescription %>">
+	    <meta name="keywords" content="<%= metaKeywords %>">
+
+		<!-- // Open Graph Metadata -->
+		<meta property="og:title" content="<%= title %>">
+		<meta property="og:type" content="website">
+		<meta property="og:description" content="<%= metaDescription %>">
+		<meta property="og:url" content="<%= url %>">
+		<meta property="og:image" content="<%= getFacebookImage %>">
+
+		<!-- // Twitter Metadata -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="<%= title %>">
+		<meta name="twitter:description" content="<%= metaDescription %>">
+		<meta name="twitter:image" content="<%= getTwitterImage %>">
+		<meta name="twitter:domain" content="<%= url %>">
+
+	    <% if (DtmContext.IsProxyIpAddress || DtmContext.CampaignDomains.Any(d => d.DomainId == DtmContext.DomainId && d.Domain.ToLower().Contains("dtmstage"))) { %>
+
+	        <meta name="robots" content="noindex, nofollow">
+
+	    <% } else { %>
+
+	        <meta name="google-site-verification" content="<%= Model.PageMetaVerify %>">
+            <meta name="msvalidate.01" content="617F9E44E7841BBC8E57FE0772BB9DD9">
+	        <link rel="canonical" href="https://www.microtouchgroom.com/">
+
+	    <% } %>
+
+        <% 
+            var faviconVersion = String.Format("?fv={0}", 1);
+            var themeColor = "#FFFFFF";
+        %>
+        <link rel="icon shortcut" href="/favicon.ico<%= faviconVersion %>">
+        <link rel="mask-icon" type="image/svg+xml" href="/safari-pinned-tab.svg<%= faviconVersion %>" color="#000000">
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png<%= faviconVersion %>">
+		<link rel="alternate icon" type="image/png" href="/android-chrome-144x144.png<%= faviconVersion %>">
+
+        <meta name="msapplication-TileColor" content="<%= themeColor %>">
+        <meta name="theme-color" content="<%= themeColor %>">
+		
+		<%= Html.Partial("GetVersionStyles") %>
+
+		<asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+	</head>
+
+	<body class="dtm__in <%= dtmIn %>">
+
+		<%= Html.Partial("Header", Model, ViewData) %>
+
+		<asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+
+        <%
+            List<string> excludeIGSliderPageCodes = new List<string> { "ShoppingCart", "Checkout" };
+
+            if (!excludeIGSliderPageCodes.Contains(DtmContext.PageCode))
+            {
+                Html.RenderPartial("Instagram-Slider");
+            }
+ 
+            Html.RenderPartial("EmailOptIn");      
+        %>
+
+        <%= Html.Partial("Footer") %>
+      
+		<%= Html.Partial("GetVersionScripts", Model) %>
+		<%= Model.FrameworkVersion %>
+
+	</body>
+
+</html>

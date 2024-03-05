@@ -1,0 +1,6 @@
+@use "../../Shared/css/template/dtm/utils/scope";
+@use "../interfaces/app";
+
+@include scope.for-template {
+    @include app.defer;
+}

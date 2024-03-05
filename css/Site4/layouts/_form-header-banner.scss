@@ -1,0 +1,65 @@
+$select: ".form-header-banner" !default;
+
+// config
+@use "../config/colors";
+
+// layouts
+@use "../../../Shared/css/template/shoppingcart/layouts/form-header-banner";
+
+// components
+@use "../../../Shared/css/template/shoppingcart/components/banner";
+
+// themes
+@use "../../../Shared/css/template/base/themes/background";
+
+// abstracts
+@use "../../../Shared/css/template/base/abstracts/group";
+
+@mixin base {
+    @include banner.new {
+        @include background.color-map(colors.get(primary), colors.get(dark));
+        padding: 0;
+    }
+
+    @include form-header-banner.new;
+
+    #{$select} {
+        font-weight: 700;
+        @include group.contain;
+
+        input {
+            font: inherit;
+
+            &:placeholder-shown {
+                text-transform: uppercase;
+            }
+        }
+
+        h2 {
+            font-size: 2rem;
+            flex: 1 1 60rem;
+        }
+
+        &__title {
+            flex: 0 1 auto;
+        }
+
+        &__form {
+            flex: 1 1 45rem;
+        }
+
+        fieldset {
+            @include group.contain;
+
+            > input {
+                flex: 1 1 auto;
+            }
+
+            > button {
+                flex: 1 0 auto;
+            }
+        }
+
+        @content;
+    }
+}

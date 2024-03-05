@@ -1,0 +1,80 @@
+@use "../themes/colors";
+
+@use "../../Shared/css/template/shoppingcart/interfaces/dtm";
+
+@use "../../Shared/css/template/shoppingcart/layouts/form";
+@use "../layouts/account";
+@use "../layouts/checkout";
+
+@use "../../Shared/css/template/shoppingcart/components/icons";
+@use "../../Shared/css/template/shoppingcart/components/validate";
+@use "../../Shared/css/template/shoppingcart/components/validation-summary-errors" as vse;
+@use "../../Shared/css/template/dtm/components/payment-icons";
+
+@use "../components/order-table";
+
+@mixin base {
+    @include form.new;
+    @content;
+}
+
+@mixin product {
+    @include base {
+        @include form.icon-field-combobox;
+        @include form.label-combobox;
+        @include form.select;
+    }
+}
+
+@mixin checkout {
+    @include base {
+        @include account.new;
+        @include account.checkout;
+
+        @include checkout.new;
+        @include checkout.cart;
+        @include checkout.order-item;
+        @include checkout.offer-details;
+
+        @include dtm.express-checkout {
+            #{account.$select} {
+                &__header + #{dtm.$select-checkout} {
+                    margin-top: 1rem;
+                }
+            }
+        }
+        @include dtm.form;
+        @include dtm.review-table;
+        @include dtm.facebox;
+        @include dtm.remove-form-headline;
+
+        @include order-table.new;
+        @include order-table.item-grid {
+            tbody {
+                td {
+                    &:first-child {
+                        @include order-table.span-item-grid-row;
+                    }
+
+                    &:not(:first-child) {
+                        @include order-table.flex-item-grid-row;
+                    }
+                }
+            }
+        }
+
+        @include form.fieldset;
+        @include form.field-label;
+        @include form.icon-field-combobox;
+        @include form.label-combobox;
+        @include form.checkbox;
+        @include form.select;
+
+        @include icons.combobox;
+
+        @include validate.new;
+        @include vse.new;
+        @include payment-icons.new;
+        @include payment-icons.form;
+    }
+}

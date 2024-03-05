@@ -1,0 +1,33 @@
+$select: ".title" !default;
+
+// config
+@use "../config/fonts";
+@use "../config/colors";
+@use "../config/queries";
+
+// components
+@use "../../../Shared/css/template/shoppingcart/components/title" with ($select: $select);
+
+// themes
+@use "../../../Shared/css/template/base/themes/background";
+
+// utils
+@use "../../../Shared/css/template/base/utils/unit-conversion" as convert;
+
+@mixin base {
+    @include title.new;
+
+    #{$select} {
+        font: normal #{convert.to-rem(60)}/ 1 fonts.get(secondary), sans-serif;
+        font-size: clamp(#{convert.to-rem(30)}, 14vw, #{convert.to-rem(60)});
+        font-weight: normal;
+        letter-spacing: 0.2rem;
+        text-transform: uppercase;
+
+        @media all and (max-width: queries.get(mobile)) {
+            margin: 0;
+        }
+
+        @content;
+    }
+}

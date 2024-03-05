@@ -1,0 +1,204 @@
+@use "sass:math";
+
+$select: ".slide" !default;
+$desktop: 1000px !default;
+
+// config
+@use "../config/colors";
+
+// layouts
+@use "../../../Shared/css/template/shoppingcart/layouts/slide" with (
+    $select: $select,
+    $desktop: $desktop
+);
+
+// abstracts
+@use "../../../shared/css/template/base/abstracts/group";
+
+// media
+@use "../../../shared/css/template/base/media/contain";
+
+// utils
+@use "../../../Shared/css/template/base/utils/unit-conversion" as convert;
+
+@mixin new {
+    @include slide.new;
+    @include fade;
+}
+
+@mixin fade {
+    @include slide.fade;
+
+    #{$select} {
+        &--fade {
+            #{$select} {
+                &__into {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+@mixin responsive {
+    #{$select} {
+        &--responsive {
+            #{$select} {
+                &__into {
+                    flex-wrap: nowrap;
+                    max-width: 100%;
+                    margin: 0;
+                    justify-content: flex-start;
+                    overflow-x: auto;
+                }
+
+                &__item {
+                    justify-content: center;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin review {
+    #{contain.$select} {
+        &--arrow {
+            @include contain.ratio(math.div(70, 178));
+        }
+    }
+
+    #{$select} {
+        &--review {
+            #{$select} {
+                @media all and (min-width: convert.to-rem(1360, $media: true)) {
+                    $offset: -6rem;
+
+                    &__prev {
+                        left: $offset;
+                    }
+
+                    &__next {
+                        right: $offset;
+                    }
+
+                    &__prev,
+                    &__next {
+                        max-width: convert.to-rem(40);
+                        width: 100%;
+                        padding: 0.75rem;
+                    }
+                }
+
+                &__into {
+                    align-items: stretch;
+                    margin: auto;
+
+                    @media all and (min-width: slide.$desktop) and (max-width: convert.to-rem(1360, $media: true)) {
+                        max-width: 90%;
+                    }
+                }
+
+                &__item {
+                    margin: 0;
+                    align-items: stretch;
+
+                    max-width: 34%;
+
+                    @media all and (max-width: convert.to-rem(1200, $media: true)) {
+                        max-width: 50%;
+                    }
+
+                    @media all and (max-width: slide.$desktop) {
+                        max-width: 47vw;
+                    }
+
+                    @media all and (max-width: convert.to-rem(800, $media: true)) {
+                        max-width: 100vw;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin vimeo-carousel {
+    #{contain.$select} {
+        &--video {
+            @include contain.ratio(math.div(16, 9));
+        }
+    }
+
+    #{$select} {
+        &--vimeo-carousel {
+            iframe {
+                z-index: 1;
+            }
+
+            #{$select} {
+                &__into {
+                    background: #222;
+                    margin: 0;
+                }
+
+                &__thumbnails {
+                    position: absolute;
+                    bottom: 2rem;
+                    left: 0;
+                    right: 0;
+                    z-index: 1;
+                }
+
+                &__thumbnail {
+                    &::before {
+                        background: #74736e;
+                    }
+
+                    &::after {
+                        background: white;
+                    }
+                }
+
+                &__dot {
+                    margin: 1rem;
+                    border: none;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin instagram {
+    #{$select} {
+        &--instagram {
+            img {
+                height: 100%;
+            }
+
+            #{$select} {
+                &__item {
+                    max-width: 20%;
+
+                    @media all and (max-width: convert.to-rem(1200, $media: true)) {
+                        max-width: calc(100vw / 4);
+                    }
+
+                    @media all and (max-width: slide.$desktop) {
+                        max-width: calc(100vw / 3);
+                    }
+
+                    @media all and (max-width: convert.to-rem(800, $media: true)) {
+                        max-width: 50vw;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}

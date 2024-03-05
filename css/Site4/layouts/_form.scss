@@ -1,0 +1,50 @@
+$select: ".form" !default;
+
+// layouts
+@forward "../../../Shared/css/template/shoppingcart/layouts/form";
+
+// config
+@use "../config/fonts";
+
+// abstracts
+@use "../../../Shared/css/template/base/abstracts/group";
+
+@mixin group {
+    #{$select} {
+        &__group {
+            $size: 1rem;
+            padding: $size 0;
+            @include group.contain($size);
+            @include group.flexchild(1 1 15em);
+        }
+
+        &__take-row {
+            flex-basis: 100%;
+        }
+
+        &__take-some {
+            flex-basis: 10em;
+        }
+    }
+}
+
+@mixin field {
+    #{$select} {
+        &__field {
+            font-family: fonts.get(primary), sans-serif;
+            line-height: 1.45;
+        }
+    }
+}
+
+@mixin label {
+    #{$select} {
+        label {
+            margin-bottom: 0.5rem;
+        }
+
+        [role="alert"] {
+            min-height: 2rem;
+        }
+    }
+}

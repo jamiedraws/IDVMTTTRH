@@ -1,0 +1,17 @@
+$select: ".instagram" !default;
+
+@mixin base {
+    #{$select} {
+        border-top: 1rem solid white;
+
+        &__picture {
+            background: whitesmoke;
+
+            &:nth-child(even) {
+                background: #ededed;
+            }
+        }
+
+        @content;
+    }
+}

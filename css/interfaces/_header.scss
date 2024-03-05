@@ -1,0 +1,152 @@
+@use "sass:map";
+
+$breakpoint: 1000px !default;
+$breakpoint-max: 999px !default;
+
+@use "../themes/fonts";
+@use "../themes/colors";
+
+@use "../../Shared/css/template/shoppingcart/interfaces/dtm";
+
+@use "../../Shared/css/template/shoppingcart/layouts/nav" with (
+    $colors: (
+        button-open: colors.get(light),
+        button-close: colors.get(dark)
+    ),
+    $mq: (
+        container-min: $breakpoint,
+        container-max: $breakpoint-max
+    )
+);
+@use "../../Shared/css/template/shoppingcart/layouts/form";
+@use "../../Shared/css/template/shoppingcart/layouts/group";
+
+@use "../../Shared/css/template/shoppingcart/components/logo";
+@use "../../Shared/css/template/shoppingcart/components/toggle-icons";
+@use "../../Shared/css/template/shoppingcart/components/circular";
+
+@mixin nav {
+    #{dtm.$select-dtm} {
+        #{nav.$select} {
+            @include dtm.unset-icomoon;
+        }
+    }
+
+    @include nav.new {
+        font: 600 1.5rem/1 fonts.get(secondary), sans-serif;
+
+        @include logo.new;
+
+        &__banner {
+            flex: 1 1 100%;
+            font: bold 1.3rem/1 fonts.get(primary), sans-serif;
+            letter-spacing: 1.5px;
+        }
+
+        &__logo {
+            margin-right: auto;
+            padding: 1em;
+            flex-basis: 15em;
+        }
+
+        &__menu &__list {
+            margin: 0.5rem;
+
+            > a {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        &__list {
+            text-transform: uppercase;
+        }
+
+        &__picture {
+            max-width: 50px;
+        }
+
+        &__drop__link {
+            @include group.gutter;
+            margin: 0;
+
+            > span {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                flex: 1;
+                padding: 1em;
+            }
+        }
+    }
+
+    @include nav.bar {
+        $nav-link-desktop-width: 16em;
+
+        &__list > a {
+            flex: 0 1 $nav-link-desktop-width;
+        }
+
+        &__tier-first {
+            > *:not(:first-child) {
+                border-left: 1px solid #575757;
+            }
+        }
+
+        &__drop {
+            max-width: $nav-link-desktop-width;
+        }
+    }
+
+    @include nav.drawer {
+        &__list > &__logo {
+            left: -1rem;
+        }
+    }
+
+    @include nav.standalone;
+    @include nav.dropdown-grid;
+    @include nav.dropdown-stack;
+
+    @include toggle-icons.new;
+    @include toggle-icons.checkbox(
+        "#{nav.$select}__toggle",
+        scale(0),
+        scale(0.75)
+    );
+
+    @include nav.icon-text;
+    @include nav.icon-button;
+
+    @include circular.new {
+        color: colors.get(light);
+
+        &:hover,
+        &:focus {
+            color: colors.get(dark);
+        }
+    }
+    @include circular.pill;
+
+    @content;
+}
+
+@mixin search {
+    @include form.search;
+    @include form.underline;
+    @include form.field-icon;
+
+    #{nav.$select} {
+        &__form {
+            margin: 1rem;
+            max-width: 600px;
+            flex: 1 1 100%;
+
+            input {
+                background: transparent;
+            }
+        }
+    }
+
+    @content;
+}

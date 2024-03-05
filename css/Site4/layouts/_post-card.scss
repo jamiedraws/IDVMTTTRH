@@ -1,0 +1,134 @@
+$select: ".post-card" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        display: flex;
+        flex-direction: column;
+
+        border: 1px solid black;
+
+        text-align: center;
+
+        &__picture {
+            flex: 0 0 auto;
+            display: block;
+        }
+
+        &__logo {
+            flex: 0 0 5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+
+            > img {
+                max-width: 10em;
+                max-height: 5em;
+            }
+        }
+
+        &__caption {
+            padding: 1rem;
+
+            @include space.between-flow-elements() {
+            }
+        }
+
+        &__title {
+            font-size: fonts.em(20);
+    font-weight: normal;
+        }
+
+        &__desc {
+            font-size: fonts.rem(18);
+        }
+
+        &__footer {
+            margin: auto 1.5rem 0;
+            padding: 1rem;
+            border-top: 1px solid #cccccc;
+
+            font-size: fonts.rem(18);
+        }
+
+        &__link {
+            text-transform: uppercase;
+            text-underline-offset: 0.25em;
+            font-size: fonts.em(20);
+        }
+
+        &__link:not(:hover):not(:focus) {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: cover;
+        }
+
+        @content;
+    }
+}
+
+@mixin shefinds {
+    #{$select} {
+        &--shefinds {
+            #{$select} {
+                &__logo > img {
+                    max-width: 7em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin allure {
+    #{$select} {
+        &--allure {
+            #{$select} {
+                &__logo > img {
+                    max-width: 7em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin harpersbazaar {
+    #{$select} {
+        &--harpersbazaar {
+            #{$select} {
+                &__logo > img {
+                    max-width: 7em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin elle {
+    #{$select} {
+        &--elle {
+            #{$select} {
+                &__logo > img {
+                    max-width: 7em;
+                }
+            }
+
+            @content;
+        }
+    }
+}

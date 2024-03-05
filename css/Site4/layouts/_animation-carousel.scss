@@ -1,0 +1,20 @@
+$select: ".animation-carousel" !default;
+
+// config
+@use "../config/colors";
+
+@mixin base {
+    #{$select} {
+        background: colors.get(animation-carousel);
+        border-top: 1rem solid colors.get(light);
+        border-bottom: 1rem solid colors.get(light);
+        overflow: hidden;
+
+        &__in {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        @content;
+    }
+}

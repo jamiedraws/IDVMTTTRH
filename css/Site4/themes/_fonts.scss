@@ -1,0 +1,23 @@
+@use "sass:map";
+
+$select: ".font" !default;
+
+$list: (
+    primary: Arial,
+    secondary: Haettenschweiler,
+    third: Arial Narrow
+);
+
+@function get($name) {
+    @return map.get($list, $name);
+}
+
+@mixin new {
+    #{$select} {
+        @each $name, $font in $list {
+            &-#{$name} {
+                font-family: $font;
+            }
+        }
+    }
+}

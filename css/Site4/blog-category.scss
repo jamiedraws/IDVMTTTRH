@@ -1,0 +1,7 @@
+// interfaces
+@use "interfaces/page";
+@use "interfaces/blog";
+
+@include page.landing-page;
+
+@include blog.blog-category;

@@ -1,0 +1,53 @@
+// utils
+@use "./../utils/contain";
+
+// components
+@use "./../components/paginate-list";
+@use "./../components/breadcrumb";
+
+// layouts
+@use "./../layouts/article";
+@use "./../layouts/excerpt";
+@use "./../layouts/post-card";
+@use "./../layouts/content";
+
+@mixin blog-category {
+    // utils
+    @include contain.excerpt-thumb;
+    @include contain.post-card;
+
+    // components
+    @include paginate-list.base;
+    @include breadcrumb.base;
+
+    // layouts
+    @include excerpt.base;
+    @include excerpt.span-picture-with-copy-tile;
+
+    @include post-card.base;
+    @include post-card.allure;
+    @include post-card.harpersbazaar;
+    @include post-card.elle;
+    @include post-card.shefinds;
+
+    @include content.post-cards;
+
+    @content;
+}
+
+@mixin blog-article {
+    // utils
+    @include contain.excerpt-thumb;
+    @include contain.post-card;
+
+    // components
+
+    // layouts
+    @include article.base;
+    @include article.contain;
+    @include article.image-video;
+    @include article.image-text;
+    @include article.nav;
+
+    @content;
+}

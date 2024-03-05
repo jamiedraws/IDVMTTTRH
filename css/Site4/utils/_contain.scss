@@ -1,0 +1,141 @@
+@use "sass:math";
+
+$select: ".contain" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// utils
+@use "Shared/scss/templates/base/utils/contain";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/contain" as internal;
+
+@mixin base {
+    @include contain.base;
+
+    #{$select} {
+        &--video {
+            @include contain.ratio(math.div(16, 9));
+            background: colors.primary-type(black);
+
+            img[src$="default.svg"] {
+                background: white;
+            }
+        }
+
+        &--square {
+            @include contain.ratio(math.div(1, 1));
+            background: whitesmoke;
+
+            @include internal.pseudo;
+        }
+
+        &--product-beauty-shot {
+            @include contain.ratio($ratio: math.div(120, 163));
+        }
+
+        @content;
+    }
+}
+
+@mixin tiktok-video {
+    #{$select} {
+        &--tiktok-video {
+            @include contain.ratio(math.div(9, 16));
+            background: #ededed;
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin pots-and-pans {
+    #{$select} {
+        &--pots-and-pans {
+            @include contain.ratio(math.div(371, 463));
+            max-width: #{queries.rem(371)};
+            align-self: flex-start;
+
+            @content;
+        }
+    }
+}
+
+@mixin excerpt-thumb {
+    #{$select} {
+        &--excerpt-thumb {
+            @include contain.ratio(math.div(1000, 667));
+            background: colors.get(placeholder);
+
+            * {
+                @include internal.fill;
+            }
+
+            img {
+                object-fit: cover;
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin post-card {
+    #{$select} {
+        &--post-card {
+            @include contain.ratio(math.div(1000, 667));
+            background: colors.get(placeholder);
+
+            * {
+                @include internal.fill;
+            }
+
+            img {
+                object-fit: cover;
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin bazaarvoice-inline-ratings {
+    #{$select} {
+        &--bazaarvoice-inline-rating {
+            // max-width: queries.em(181);
+
+            @include contain.ratio(math.div(181, 26));
+            @include internal.pseudo;
+
+            @content;
+        }
+    }
+}
+
+@mixin bazaarvoice-inline-ratings-with-first {
+    #{$select} {
+        &--bazaarvoice-inline-rating {
+            max-width: queries.em(341);
+
+            @include contain.ratio(math.div(341, 50));
+            @include internal.pseudo;
+
+            @content;
+        }
+    }
+    // removes inline-flex from bazaarvoice to add text above
+    [data-bv-show] a[aria-label*="0.0"] {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+    [data-bv-show] a[aria-label*="0.0"]::before {
+        content: "Be the first to leave a review";
+        flex: 0 1 100%;
+    }
+}

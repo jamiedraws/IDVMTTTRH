@@ -1,0 +1,159 @@
+@use "../../Shared/css/template/shoppingcart/layouts/group";
+@use "../../Shared/css/template/shoppingcart/components/copy";
+@use "../themes/colors";
+@use "../themes/fonts";
+
+$select: ".product" !default;
+
+@mixin new {
+    #{$select} {
+        font-size: 1.8rem;
+
+        &__group {
+            display: flex;
+            justify-content: flex-start;
+            @include group.gutter(1rem);
+        }
+
+        &__carousel {
+            flex: 0 1 101rem;
+        }
+
+        &__form {
+            flex: 1 1 50rem;
+        }
+
+        &__copy {
+            @include copy.separate;
+        }
+
+        &__title {
+            font-size: 2.4rem;
+        }
+
+        &__price {
+            font-size: 1.8rem;
+        }
+
+        &__contain {
+            max-width: 50rem;
+        }
+
+        &__nav {
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 1rem;
+
+            @include group.gutter-with-side-reset(1rem, false, true);
+
+            > a {
+                flex: 0 1 auto;
+            }
+        }
+
+        &__label {
+            font-size: 1.8rem;
+        }
+
+        &__link {
+            display: block;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease-in-out;
+
+            &:hover,
+            &:focus {
+                border-color: colors.get(third);
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin grid {
+    #{$select} {
+        &--grid {
+            font-weight: bold;
+
+            #{$select} {
+                &__group {
+                    flex-direction: column;
+                }
+
+                &__item {
+                    flex: 0 1 40rem;
+                }
+
+                &__content {
+                    margin-top: auto;
+                }
+
+                &__price {
+                    border-top: 1px solid;
+                    margin-top: 1rem;
+                    padding-top: 1rem;
+                }
+
+                &__nav {
+                    justify-content: center;
+
+                    > a {
+                        flex: 1 1 12rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin single {
+    #{$select} {
+        &--single {
+            #{$select} {
+                &__group {
+                    flex-wrap: wrap;
+                    @include group.gutter(2rem);
+                }
+
+                &__picture {
+                    flex: 0 1 52rem;
+                }
+
+                &__content {
+                    flex: 1 1 30rem;
+                }
+
+                &__title,
+                &__price {
+                    font-weight: bold;
+                }
+
+                &__title {
+                    text-transform: uppercase;
+                }
+
+                &__price {
+                    margin: 2rem 0;
+                }
+
+                &__text {
+                    border-top: 1px solid;
+                    margin-top: 1rem;
+                    padding-top: 1rem;
+
+                    > * + * {
+                        margin-top: 1rem;
+                    }
+
+                    > strong {
+                        display: block;
+                    }
+                }
+
+                &__nav > #{$select}__form {
+                    flex: 0 1 20em;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,78 @@
+@use "../../Shared/css/template/shoppingcart/layouts/group";
+@use "../../Shared/css/template/shoppingcart/layouts/slide";
+@use "../themes/colors";
+@use "../../Shared/css/slide/1/components/thumbnails";
+
+$breakpoint: 1060px !default;
+$namespace: "product" !default;
+
+@mixin new {
+    @include slide.overlay-nav-buttons(#{slide.$select}--#{$namespace});
+
+    #{slide.$select} {
+        &--#{$namespace} {
+            display: flex;
+            flex-wrap: wrap;
+            @include group.gutter(0.5rem);
+
+            > * {
+                flex: 1;
+            }
+
+            #{slide.$select} {
+                &__into {
+                    flex: 1 1 84rem;
+                    max-width: 84rem;
+                    position: relative;
+                }
+
+                &__thumbnails {
+                    flex: 1;
+                    order: 1;
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: flex-start;
+
+                    @include group.gutter(0.5rem);
+                    margin: 0;
+
+                    > a {
+                        display: block;
+                        flex: 0 1 9rem;
+
+                        &::after {
+                            background: transparent;
+                        }
+                    }
+
+                    @media all and (max-width: $breakpoint) {
+                        @include thumbnails.scroll;
+                        margin-left: 0.5rem;
+                        margin-right: 0.5rem;
+
+                        > a {
+                            flex: 0 0 8rem;
+                            flex-basis: clamp(4rem, 16vw, 8rem);
+                        }
+                    }
+                }
+
+                &__thumbnail {
+                    outline: 2px solid transparent;
+                    transition: outline-color 0.3s ease-in-out;
+
+                    &:hover,
+                    &:focus {
+                        outline-color: black;
+                    }
+
+                    &--is-selected {
+                        outline-color: colors.get(primary);
+                    }
+                }
+            }
+        }
+
+        @content;
+    }
+}

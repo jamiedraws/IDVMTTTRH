@@ -1,0 +1,42 @@
+$select: ".breadcrumb" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "./../abstracts/shape-icons";
+
+@mixin base {
+    #{$select} {
+        color: #555555;
+        text-transform: capitalize;
+
+        @include group.contain;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+
+        white-space: nowrap;
+        overflow-x: auto;
+
+        > * {
+            &:not(:last-child)::after {
+                content: "";
+
+                @include shape-icons.chevron;
+                transform: rotate(0.5turn);
+
+                margin-left: 0.5em;
+                margin-bottom: -0.2em;
+            }
+
+            &:not(:hover):not(:focus) {
+                text-decoration: none;
+            }
+        }
+
+        @content;
+    }
+}

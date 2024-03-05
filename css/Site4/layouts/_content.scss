@@ -1,0 +1,188 @@
+$select: ".content" !default;
+
+@use "sass:math";
+
+// config
+@use "../config/colors";
+@use "../config/fonts";
+@use "./../config/queries";
+
+// components
+@use "../../../Shared/css/template/base/components/list";
+
+// abstracts
+@use "../../../Shared/css/template/base/abstracts/group";
+@use "../../../Shared/css/template/base/abstracts/copy";
+@use "Shared/scss/templates/base/abstracts/space";
+
+//media
+@use "../../../Shared/css/template/base/media/contain";
+
+// utils
+@use "../../../Shared/css/template/base/utils/unit-conversion" as convert;
+
+// themes
+@use "../../../Shared/css/template/base/themes/background";
+
+@mixin base {
+    #{$select} {
+        &__group {
+            @include group.contain(2rem);
+        }
+
+        &__title {
+            text-transform: uppercase;
+            font: normal convert.to-rem(47) fonts.get(secondary), sans-serif;
+        }
+
+        &__text {
+            @include copy.separate(1.5rem);
+        }
+
+        & &--product-banner {
+            margin-bottom: 0.5em;
+            margin-top: 0.5em;
+        }
+
+        @media all and (min-width: queries.set(650)) {
+            & &--product-banner {
+                margin-top: 0;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin title-desc {
+    #{contain.$select} {
+        &--product-registration {
+        }
+    }
+
+    #{$select} {
+        &--title-desc {
+            text-align: center;
+            padding-bottom: 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            #{$select} {
+                &__title {
+                }
+
+                &__desc {
+                }
+
+                &__iframe {
+                    width: 100vw;
+                    height: 100vh;
+
+                    > iframe {
+                        border: none;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin image-text {
+    #{$select} {
+        &--image-text {
+            padding: 2rem 0;
+
+            #{$select} {
+                &__picture {
+                    flex-basis: convert.to-rem(360);
+                }
+
+                &__image {
+                }
+
+                &__text {
+                    flex-grow: 1;
+                    flex-basis: convert.to-rem(400);
+
+                    h2 {
+                        margin-top: 0;
+                    }
+                }
+
+                &__callout {
+                    color: colors.get(callout);
+                    font-weight: bold;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin title-video {
+    #{$select} {
+        &--title-video {
+            text-align: center;
+            @include background.color-map(colors.get(bg), colors.get(primary));
+
+            iframe {
+                border: 0;
+            }
+
+            #{$select} {
+                &__title {
+                    padding: 4rem;
+                    font-size: convert.to-rem(47);
+                    text-transform: uppercase;
+                    font-family: fonts.get(secondary), sans-serif;
+                }
+
+                &__contain {
+                    max-width: 850px;
+                    margin: auto;
+                }
+            }
+
+            @content;
+        }
+    }
+    #{contain.$select} {
+        &--video {
+            @include contain.ratio(math.div(16, 9));
+        }
+    }
+}
+
+@mixin post-cards {
+    #{$select} {
+        &--post-cards {
+            #{$select} {
+                &__group {
+                    @include group.gutter(1rem);
+                }
+
+                &__figure {
+                    flex-basis: queries.em(422);
+                }
+
+                &__header-container {
+                    justify-content: space-between;
+                }
+
+                &__video-link {
+                    align-self: center;
+                }
+
+                &__title {
+                    text-align: center;
+                }
+            }
+
+            @content;
+        }
+    }
+}

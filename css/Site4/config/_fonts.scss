@@ -1,0 +1,51 @@
+@use "sass:map";
+
+@forward "Shared/scss/templates/base/config/units";
+
+$select: ".font" !default;
+
+$list: (
+    primary: Arial,
+    secondary: Haettenschweiler,
+    tertiary: museo-sans
+);
+
+@function get($name) {
+    @return map.get($list, $name);
+}
+
+@mixin new {
+    #{$select} {
+        @each $name, $font in $list {
+            &-#{$name} {
+                font-family: $font;
+            }
+        }
+    }
+}
+
+@mixin request {
+    @font-face {
+        font-family: museo-sans;
+        src: url(/shared/webfonts/museo-sans/museo-sans-500.woff2)
+                format("woff2"),
+            url(/shared/webfonts/museo-sans/museo-sans-500.woff) format("woff");
+        font-weight: 500;
+    }
+
+    @font-face {
+        font-family: museo-sans;
+        src: url(/shared/webfonts/museo-sans/museo-sans-700.woff2)
+                format("woff2"),
+            url(/shared/webfonts/museo-sans/museo-sans-700.woff) format("woff");
+        font-weight: 700;
+    }
+
+    @font-face {
+        font-family: haettenschweiler;
+        src: url(/shared/webfonts/haettenschweiler/Haettenschweiler.woff2)
+                format("woff2"),
+            url(/shared/webfonts/haettenschweiler/Haettenschweiler.woff)
+                format("woff");
+    }
+}

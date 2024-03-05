@@ -1,0 +1,3 @@
+@use "../interfaces/page";
+
+@include page.landing-page($critical: false);

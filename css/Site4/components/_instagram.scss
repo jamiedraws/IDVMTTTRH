@@ -1,0 +1,16 @@
+$select: ".instagram" !default;
+
+@mixin new {
+    #{$select} {
+        margin: 0;
+        @content;
+    }
+}
+
+@mixin group {
+    #{$select} {
+        display: flex;
+        align-items: flex-start;
+        @content;
+    }
+}

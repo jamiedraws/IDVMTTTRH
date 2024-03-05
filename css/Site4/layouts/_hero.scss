@@ -1,0 +1,35 @@
+@use "sass:math";
+
+$select: ".hero" !default;
+
+// config
+@use "../config/colors";
+@use "Shared/scss/templates/base/config/units" as queries;
+
+// media
+@use "../../../Shared/css/template/base/media/contain";
+
+@mixin base {
+    #{contain.$select} {
+        &--hero {
+            @include contain.ratio(math.div(1198, 499));
+        }
+
+        &--product-banner {
+            @media all and (min-width: queries.set(650)) {
+                @include contain.ratio(math.div(1482, 359));
+            }
+
+            @media all and (max-width: queries.set(650)) {
+                @include contain.ratio(math.div(650, 683));
+            }
+        }
+    }
+
+    #{$select} {
+        background: colors.get(placeholder);
+        border-bottom: 3rem solid #fdc240;
+
+        @content;
+    }
+}

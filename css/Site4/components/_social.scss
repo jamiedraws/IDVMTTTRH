@@ -1,0 +1,18 @@
+$select: ".social" !default;
+
+@use "../../../Shared/css/template/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        font-size: 1.5em;
+        @include group.gutter(1.5rem);
+        display: flex;
+        justify-content: center;
+
+        &__icon {
+            stroke: none;
+            fill: currentColor;
+        }
+        @content;
+    }
+}

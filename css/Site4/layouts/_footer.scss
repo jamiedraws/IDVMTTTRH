@@ -1,0 +1,39 @@
+$select: ".footer" !default;
+
+// config
+@use "../config/fonts";
+@use "../config/colors";
+@use "../config/queries";
+
+// components
+@use "../../../Shared/css/template/base/components/list";
+
+// themes
+@use "../../../Shared/css/template/base/themes/background";
+
+@mixin new {
+    #{$select} {
+        text-align: center;
+        font: 1.4rem/1.45 fonts.get(primary), sans-serif;
+        overflow: hidden;
+
+        @include background.color-map(colors.get(dark), colors.get(light));
+
+        &__logo {
+            margin: auto;
+        }
+
+        &__nav nav {
+            @media all and (min-width: queries.get(mobile)) {
+                @include list.structure;
+                @include list.inline;
+            }
+        }
+
+        &__link {
+            text-decoration: underline;
+        }
+
+        @content;
+    }
+}

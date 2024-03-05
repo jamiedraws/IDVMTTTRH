@@ -1,0 +1,22 @@
+@use "sass:map";
+
+$select: ".font" !default;
+
+$list: (
+    primary: europa,
+    secondary: bebas-neue-pro-expanded
+);
+
+@function get($name) {
+    @return map.get($list, $name);
+}
+
+@mixin new {
+    #{$select} {
+        @each $name, $font in $list {
+            &-#{$name} {
+                font-family: $font;
+            }
+        }
+    }
+}

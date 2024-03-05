@@ -1,0 +1,25 @@
+$select: ".slide" !default;
+$desktop: 1000px !default;
+
+@use "../../Shared/css/template/shoppingcart/layouts/slide" with (
+    $select: $select,
+    $desktop: $desktop
+);
+
+@mixin new {
+    @include slide.new {
+        @media all and (min-width: slide.$desktop) {
+            &__nav {
+                color: white;
+            }
+
+            &__prev {
+                left: 1em;
+            }
+
+            &__next {
+                right: 1em;
+            }
+        }
+    }
+}

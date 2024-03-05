@@ -1,0 +1,292 @@
+@use "sass:map";
+
+$select: ".nav" !default;
+
+// utils
+@use "../../../Shared/css/template/base/utils/unit-conversion" as convert;
+
+// config
+@use "../config/fonts";
+@use "../config/colors";
+
+// layouts
+@use "../../../Shared/css/template/shoppingcart/layouts/nav" with (
+    $colors: (
+        background: #2d2d2d,
+        button-open: colors.get(light),
+        button-close: colors.get(dark)
+    ),
+    $mq: (
+        container-min: convert.to-rem(1371, $media: true),
+        container-max: convert.to-rem(1370, $media: true)
+    )
+);
+
+// abstracts
+@use "../../../Shared/css/template/base/abstracts/group";
+
+@mixin base {
+    @include nav.new {
+        font: 600 1.5rem/1 fonts.get(primary), sans-serif;
+        font-stretch: condensed;
+
+        &__banner {
+            flex: 1 1 100%;
+            font: bold 1.3rem/1 fonts.get(primary), sans-serif;
+            letter-spacing: 1.5px;
+        }
+
+        &__in {
+            align-items: stretch;
+            max-width: convert.to-rem(1600);
+        }
+
+        a:hover,
+        a:focus {
+            color: colors.get(primary);
+        }
+
+        & &__link {
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+
+        &__text {
+            margin-left: 0;
+        }
+
+        &__icon + &__text {
+            margin-left: 0.5rem;
+        }
+
+        &__icon-text {
+            flex-wrap: wrap;
+        }
+
+        & &__link {
+            $padding: 2rem;
+            padding: 0 $padding;
+
+            > span {
+                padding: $padding 0;
+            }
+        }
+
+        &__logo {
+            padding: 1em;
+            max-width: 15em;
+        }
+
+        &__menu &__list {
+            margin: 0.5rem;
+
+            > a {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        &__list {
+            text-transform: uppercase;
+        }
+
+        &__picture {
+            max-width: 50px;
+        }
+
+        &__drop__link {
+            @include group.gutter;
+            margin: 0;
+
+            > span {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                flex: 1;
+                padding: 1em;
+            }
+        }
+
+        &__button-group {
+            display: flex;
+            margin-left: auto;
+            color: colors.get(light);
+        }
+
+        &__label {
+            align-self: center;
+            width: auto;
+        }
+    }
+
+    @include nav.bar {
+        &__pane {
+            background: transparent;
+
+            &::before,
+            &::after {
+                opacity: 0;
+            }
+        }
+
+        &__list {
+            justify-content: space-evenly;
+        }
+
+        &__list > a {
+            flex: 0 1 auto;
+            font-family: fonts.get(third);
+        }
+
+        &__drop {
+            max-width: 10em;
+        }
+    }
+
+    @include nav.standalone;
+    @include nav.dropdown-grid;
+    @include nav.dropdown-stack;
+
+    @include nav.icon-text;
+    @include nav.icon-button;
+
+    @include nav.drawer {
+        &__logo {
+            max-width: 13em;
+        }
+
+        &__list > &__logo {
+            left: -1rem;
+            margin: 0 1rem;
+        }
+
+        &__icon-button {
+            min-width: 3em;
+        }
+    }
+
+    @include underline;
+
+    @include trapezoid;
+
+    @content;
+}
+
+@mixin trapezoid-element($background-color: #494949) {
+    background-color: $background-color;
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+
+    @content;
+}
+
+@mixin trapezoid {
+    $background-color: black;
+    $polygon: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+
+    #{$select} {
+        &--is-start-page {
+            @supports (clip-path: #{$polygon}) {
+                &::before,
+                &::after {
+                    @include trapezoid-element($background-color);
+                }
+
+                &::before {
+                    left: 0;
+                    width: 15vw;
+                }
+
+                &::after {
+                    right: 0;
+                    width: 1em;
+                }
+
+                #{$select} {
+                    &__logo::before {
+                        @include trapezoid-element($background-color) {
+                            width: 120%;
+                            clip-path: #{$polygon};
+                            left: 0;
+                            z-index: -1;
+                        }
+                    }
+                }
+            }
+
+            @media all and (min-width: convert.to-rem(2000, $media: true)) {
+                &::before {
+                    width: 24vw;
+                }
+            }
+
+            @media all and (min-width: convert.to-rem(2800, $media: true)) {
+                &::before {
+                    width: 33vw;
+                }
+            }
+
+            @media all and (min-width: convert.to-rem(4500, $media: true)) {
+                &::before {
+                    width: 38vw;
+                }
+            }
+        }
+    }
+}
+
+@mixin underline {
+    #{$select} {
+        &__underline-container {
+            display: flex;
+            align-items: stretch;
+
+            > #{$select}__underline-content {
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                &::after {
+                    content: "";
+                    height: 3px;
+                    background: currentColor;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    opacity: 0;
+                    transition: opacity 0.3s ease-in-out;
+                }
+            }
+
+            &:hover,
+            &:focus {
+                color: colors.get(primary);
+
+                > #{$select}__underline-content {
+                    &::after {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin search {
+    #{$select} {
+        &__form {
+            margin: 1rem;
+            max-width: 600px;
+            flex: 1 1 100%;
+
+            input {
+                background: transparent;
+            }
+        }
+    }
+}

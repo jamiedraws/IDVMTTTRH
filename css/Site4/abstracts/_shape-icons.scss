@@ -1,0 +1,15 @@
+@use "sass:color";
+
+// config
+@use "Shared/scss/templates/base/config/colors";
+
+@mixin chevron($color: #333) {
+    display: inline-block;
+    width: 0.75em;
+    height: 1em;
+
+    $color: colors.get-hsla($color);
+
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5.3 8.2' focusable='false'%3E%3Cpath stroke='#{$color}' d='M0.8,4.2 M0.8,4.2L4,1 M4,7.4L0.8,4.2'/%3E%3C/svg%3E")
+        no-repeat;
+}

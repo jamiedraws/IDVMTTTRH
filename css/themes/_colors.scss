@@ -1,0 +1,30 @@
+@use "sass:map";
+
+$select: ".color" !default;
+
+$list: (
+    dark: black,
+    light: white,
+    primary: #f5c74e,
+    accent: #666666,
+    highlight: #f5cc22,
+    callout: #e51c2e,
+    carousel-nav-arrow: #3f3f3f
+);
+
+@function get($name) {
+    @return map.get($list, $name);
+}
+
+@mixin new {
+    #{$select} {
+        @each $name, $color in $list {
+            &-#{$name} {
+                color: $color;
+                font-weight: bold;
+            }
+        }
+
+        @content;
+    }
+}
